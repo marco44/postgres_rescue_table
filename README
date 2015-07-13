@@ -2,6 +2,10 @@ This Perl script tries its best to extract whatever's left in a table after a co
 
 Most of the time, you are lucky, and there are only a few records corrupted, and you'll get most of your table back.
 
+This script works on the assumption that your system tables are OK. As they are far less often updated than normal tables, that should be ok most of the time.
+
+This script also needs that you managed to start your database. You may need some pg_resetxlog to reset some corrupted system files (xlog, clog, etc...). MAKE A BACKUP BEFORE USING pg_resetxlogs.
+
 
 Please note the few following things:
 
