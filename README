@@ -1,0 +1,17 @@
+This Perl script tries its best to extract whatever's left in a table after a corruption.
+
+Most of the time, you are lucky, and there are only a few records corrupted, and you'll get most of your table back.
+
+
+Please note the few following things:
+
+* If you manage to extract a record, it doesn't mean it isn't corrupted. It only means it hasn't crashed PostgreSQL during its extraction and passed the controls in place in PostgreSQL's code. For simple data types, such as integers, these may easily still be corrupted
+* If you have massive corruption, many records will end up full of nulls and zeros. You'll have to clean them up by yourself in the dumps. There will be a warning though
+* If you have massive corruption, this script wont help you... data is lost, you'll spend too much time trying to find what's still usable
+* This script may crash your database like crazy, meaning each time it will need to perform a recovery, which will be very slow. You can save a lot of time by using libeatmydata: https://www.flamingspork.com/projects/libeatmydata/. This will disable fsync, and will make recovery almost instantaneous. It wont make corruption worse, except if you suffer a system crash during your extraction (but then, you REALLY are unlucky :) ). Use it, it may save you hours.
+* This script is as dumb as possible: 
+  perl rescue_table.pl tablename filename.
+
+Everything else is passed by environment variables. See there: http://www.postgresql.org/docs/9.4/static/libpq-envars.html
+
+ 
