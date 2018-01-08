@@ -1,10 +1,10 @@
-This Perl script tries its best to extract whatever's left in a table after a corruption.
+This Perl script tries its best to extract whatever's left in a table after a corruption in a COPY format. Think ddrescue for PostgreSQL.
 
 Most of the time, you are lucky, and there are only a few records corrupted, and you'll get most of your table back.
 
 This script works on the assumption that your system tables are OK. As they are far less often updated than normal tables, that should be ok most of the time.
 
-This script also needs that you managed to start your database. You may need some pg_resetxlog to reset some corrupted system files (xlog, clog, etc...). MAKE A BACKUP BEFORE USING pg_resetxlogs.
+This script also requires that you managed to start your database somehow. You may need some pg_resetxlog to reset some corrupted system files (xlog, clog, etc...). MAKE A BACKUP BEFORE USING pg_resetxlogs. Or doing anything with rescue_tables anyway.
 
 
 Please note the few following things:
@@ -18,6 +18,16 @@ Please note the few following things:
 * This script is as dumb as possible: 
   perl rescue_table.pl tablename filename.
 
-Everything else is passed by environment variables. See there: http://www.postgresql.org/docs/9.4/static/libpq-envars.html
+Everything else is passed by environment variables. See there: http://www.postgresql.org/docs/9.4/static/libpq-envars.html.
 
- 
+Or in a nutshell, set:
+
+- PGDATABASE
+- PGUSER
+- PGPASSWORD
+
+You may also need PGPORT, PGHOST...
+
+I have initially been developping this as an internal Dalibo project (www.dalibo.org) to repair some customers' corrupted databases. Thank you.
+
+This is distributed under GPL V3.
